@@ -47,7 +47,7 @@ STREAM_BASE_URL = f"{DOMAIN}{STREAM_PATH}"
 # Must be direct public HTTPS image URL
 START_IMAGE_URL = os.getenv(
     "START_IMAGE_URL",
-    "https://telegra.ph/file/your-image.jpg"
+    "https://graph.org/file/cc28bdd52a4d3f4075721-34c483a7b7d2187e79.jpg"
 )
 
 START_CAPTION = os.getenv(
