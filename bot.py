@@ -9,4 +9,9 @@ app = Client(
     plugins=dict(root="plugins")
 )
 
-app.run()
+if __name__ == "__main__":
+    app.start()
+    print("Bot Started ✅")
+
+    import asyncio
+    asyncio.get_event_loop().run_forever()
