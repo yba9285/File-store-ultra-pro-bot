@@ -12,6 +12,7 @@ API_HASH = os.getenv("API_HASH", "")
 BOT_TOKEN = os.getenv("BOT_TOKEN" "")
 OWNER_ID = int(os.getenv("OWNER_ID", ))
 
+OWNER_USERNAME = os.getenv("OWNER_USERNAME", "sammarathi")
 
 # ==========================================================
 # 🔹 DATABASE CONFIGURATION
@@ -20,6 +21,7 @@ OWNER_ID = int(os.getenv("OWNER_ID", ))
 MONGO_URI = os.getenv("MONGO_URI", "")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "file_store_bot")
 
+DB_CHANNEL = int(os.getenv("DB_CHANNEL", -1002121119805))
 
 # ==========================================================
 # 🔹 DOMAIN & ROUTES
