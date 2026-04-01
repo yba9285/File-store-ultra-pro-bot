@@ -1,4 +1,4 @@
-frofrom flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session
 from web import web
 from web.auth import login_required
 
