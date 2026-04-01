@@ -9,13 +9,9 @@ app.secret_key = FLASK_SECRET_KEY
 
 app.register_blueprint(web)
 
-
-# 🔥 START BOT WITH FLASK
-@app.before_first_request
-def start_bot():
-    loop = asyncio.get_event_loop()
-    loop.create_task(bot.start())
-
+# 🔥 DIRECT BOT START (FIX)
+loop = asyncio.get_event_loop()
+loop.create_task(bot.start())
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=PORT)
