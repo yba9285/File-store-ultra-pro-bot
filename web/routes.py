@@ -8,6 +8,7 @@ from database.files import count_files, get_file
 from database.premium import get_all_premium
 from database.settings import get_settings, update_settings
 from database.logs import get_logs
+from bot import bot
 
 import asyncio  # ✅ added
 
@@ -114,12 +115,27 @@ async def logs_page():
 # 🔥 FIXED FILE ROUTE (ONLY THIS PART CHANGED)
 
 @web.route("/file/<file_id>")
-def stream_file(file_id):
-    from bot import app
+async def stream_file(file_id):
 
-    loop = app.loop  # ✅ Pyrogram ka same loop use karo
-    return loop.run_until_complete(handle_file(file_id))
+    file = await get_file(file_id)
 
+    if not file:
+        return "File Not Found"
+
+    try:
+        msg = await bot.get_messages(DB_CHANNEL, int(file_id))
+
+        if msg.document:
+            return redirect(msg.document.file_id)
+        elif msg.video:
+            return redirect(msg.video.file_id)
+        elif msg.audio:
+            return redirect(msg.audio.file_id)
+
+        return "Unsupported file type"
+
+    except Exception as e:
+        return f"Error: {e}"
 
 async def handle_file(file_id):
     try:
