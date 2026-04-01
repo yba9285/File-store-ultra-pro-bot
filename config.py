@@ -26,11 +26,11 @@ DATABASE_NAME = os.getenv("DATABASE_NAME", "file_store_bot")
 # ==========================================================
 WEB_URL = os.getenv(
     "WEB_URL",
-    ""
+    "https://file-store-ultra-pro-bot-25cg.onrender.com"
 )
 DOMAIN = os.getenv(
     "DOMAIN",
-    ""
+    "https://file-store-ultra-pro-bot-25cg.onrender.com"
 )
 
 ADMIN_PANEL_PATH = os.getenv("ADMIN_PANEL_PATH", "/admin")
