@@ -115,15 +115,17 @@ async def logs_page():
 
 @web.route("/file/<file_id>")
 def stream_file(file_id):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    from bot import app
+
+    loop = app.loop  # ✅ Pyrogram ka same loop use karo
     return loop.run_until_complete(handle_file(file_id))
 
 
 async def handle_file(file_id):
     try:
-        from bot import app
         from config import DB_CHANNEL
+        from database.files import get_file
+        from bot import app
 
         file = await get_file(file_id)
 
