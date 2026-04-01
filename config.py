@@ -7,17 +7,17 @@ load_dotenv()
 # 🔹 TELEGRAM BOT CONFIGURATION
 # ==========================================================
 
-API_ID = int(os.getenv("API_ID", 123456789))
-API_HASH = os.getenv("API_HASH", "abc123..")
-BOT_TOKEN = os.getenv("BOT_TOKEN" "12345678:...")
-OWNER_ID = int(os.getenv("OWNER_ID", 81272693))
+API_ID = int(os.getenv("API_ID", ))
+API_HASH = os.getenv("API_HASH", "")
+BOT_TOKEN = os.getenv("BOT_TOKEN" "")
+OWNER_ID = int(os.getenv("OWNER_ID", ))
 
 
 # ==========================================================
 # 🔹 DATABASE CONFIGURATION
 # ==========================================================
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://Bosshub:")
+MONGO_URI = os.getenv("MONGO_URI", "")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "file_store_bot")
 
 
@@ -26,11 +26,11 @@ DATABASE_NAME = os.getenv("DATABASE_NAME", "file_store_bot")
 # ==========================================================
 WEB_URL = os.getenv(
     "WEB_URL",
-    "https://file-store-ultra-pro-bot.onrender.com"
+    ""
 )
 DOMAIN = os.getenv(
     "DOMAIN",
-    "https://file-store-ultra-pro-bot.onrender.com"
+    ""
 )
 
 ADMIN_PANEL_PATH = os.getenv("ADMIN_PANEL_PATH", "/admin")
@@ -69,7 +69,7 @@ ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "H44PBHTWWP4LS0N5")
 # 🔹 LOGGING CONFIGURATION
 # ==========================================================
 
-LOG_CHANNEL_ID = int(os.getenv("LOG_CHANNEL_ID", -1003559364122))
+LOG_CHANNEL_ID = int(os.getenv("LOG_CHANNEL_ID", ))
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 
