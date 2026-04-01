@@ -9,6 +9,8 @@ from database.premium import get_all_premium
 from database.settings import get_settings, update_settings
 from database.logs import get_logs
 
+import asyncio  # ✅ added
+
 
 @web.route("/login", methods=["GET", "POST"])
 async def login():
@@ -109,13 +111,26 @@ async def logs_page():
     return render_template("logs.html", logs=logs)
 
 
+# 🔥 FIXED FILE ROUTE (ONLY THIS PART CHANGED)
+
 @web.route("/file/<file_id>")
-async def stream_file(file_id):
+def stream_file(file_id):
+    return asyncio.run(handle_file(file_id))
 
-    file = await get_file(file_id)
 
-    if not file:
-        return "File Not Found"
+async def handle_file(file_id):
+    try:
+        from bot import app
+        from config import DB_CHANNEL
 
-    # removed increment_download because function missing
-    return f"Streaming file: {file['file_name']}"
+        file = await get_file(file_id)
+
+        if not file:
+            return "❌ File Not Found"
+
+        msg = await app.get_messages(DB_CHANNEL, int(file["file_id"]))
+
+        return redirect(msg.link)
+
+    except Exception as e:
+        return f"🔥 ERROR: {str(e)}"
