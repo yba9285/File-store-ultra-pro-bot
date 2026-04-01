@@ -115,7 +115,9 @@ async def logs_page():
 
 @web.route("/file/<file_id>")
 def stream_file(file_id):
-    return asyncio.run(handle_file(file_id))
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return loop.run_until_complete(handle_file(file_id))
 
 
 async def handle_file(file_id):
