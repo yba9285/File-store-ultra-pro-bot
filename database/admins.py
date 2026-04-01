@@ -21,3 +21,6 @@ async def is_admin(user_id: int):
 
 async def get_all_admins():
     return col.find({})
+
+async def count_admins():
+    return await col.count_documents({})
