@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session
+frofrom flask import render_template, request, redirect, session
 from web import web
 from web.auth import login_required
 
@@ -8,8 +8,8 @@ from database.files import count_files, get_file
 from database.premium import get_all_premium
 from database.settings import get_settings, update_settings
 from database.logs import get_logs
-from bot import bot
 
+from config import DB_CHANNEL  # ✅ added
 import asyncio  # ✅ added
 
 
@@ -112,45 +112,20 @@ async def logs_page():
     return render_template("logs.html", logs=logs)
 
 
-# 🔥 FIXED FILE ROUTE (ONLY THIS PART CHANGED)
+# 🔥 FINAL FIXED FILE ROUTE (NO ERROR)
 
 @web.route("/file/<file_id>")
-async def stream_file(file_id):
+def stream_file(file_id):
 
-    file = await get_file(file_id)
+    file = asyncio.run(get_file(file_id))
 
     if not file:
         return "File Not Found"
 
     try:
-        msg = await bot.get_messages(DB_CHANNEL, int(file_id))
-
-        if msg.document:
-            return redirect(msg.document.file_id)
-        elif msg.video:
-            return redirect(msg.video.file_id)
-        elif msg.audio:
-            return redirect(msg.audio.file_id)
-
-        return "Unsupported file type"
+        # 🔥 Direct Telegram redirect (FAST & SAFE)
+        channel_id = str(DB_CHANNEL).replace("-100", "")
+        return redirect(f"https://t.me/c/{channel_id}/{file_id}")
 
     except Exception as e:
         return f"Error: {e}"
-
-async def handle_file(file_id):
-    try:
-        from config import DB_CHANNEL
-        from database.files import get_file
-        from bot import app
-
-        file = await get_file(file_id)
-
-        if not file:
-            return "❌ File Not Found"
-
-        msg = await app.get_messages(DB_CHANNEL, int(file["file_id"]))
-
-        return redirect(msg.link)
-
-    except Exception as e:
-        return f"🔥 ERROR: {str(e)}"
