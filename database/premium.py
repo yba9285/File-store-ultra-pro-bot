@@ -33,3 +33,6 @@ async def get_premium_users():
 # ✅ ADD THIS (so web/routes.py works)
 async def get_all_premium():
     return await col.find({}).to_list(length=None)
+
+async def count_premium_users():
+    return await col.count_documents({})
