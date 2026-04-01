@@ -6,7 +6,7 @@ from pyrogram.types import (
     CallbackQuery
 )
 
-from config import WEB_URL, START_PHOTO
+from config import WEB_URL, START_PHOTO, OWNER_USERNAME
 from database.users import add_user
 from middleware.force_sub import check_force
 from middleware.rate_limit import check_rate_limit
