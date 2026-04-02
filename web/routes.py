@@ -9,7 +9,7 @@ from database.premium import get_all_premium
 from database.settings import get_settings, update_settings
 from database.logs import get_logs
 
-from config import DB_CHANNEL  # ✅ added
+from config import DB_CHANNEL, ADMIN_PASSWORD  # ✅ added
 import asyncio  # ✅ added
 
 
@@ -18,7 +18,7 @@ async def login():
     if request.method == "POST":
         password = request.form.get("password")
 
-        if password == "admin123":
+        if password == ADMIN_PASSWORD:
             session["admin"] = True
             return redirect("/")
 
