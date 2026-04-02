@@ -112,20 +112,20 @@ async def logs_page():
     return render_template("logs.html", logs=logs)
 
 
-# 🔥 FINAL FIXED FILE ROUTE (NO ERROR)
+# 🔥 FINAL FIXED FILE ROUTE (SAFE + STABLE)
 
 @web.route("/file/<file_id>")
 def stream_file(file_id):
 
-    file = asyncio.run(get_file(file_id))
-
-    if not file:
-        return "File Not Found"
-
     try:
-        # 🔥 Direct Telegram redirect (FAST & SAFE)
+        file = asyncio.run(get_file(file_id))
+
+        if not file:
+            return "File Not Found"
+
+        # 🔥 Direct Telegram redirect
         channel_id = str(DB_CHANNEL).replace("-100", "")
         return redirect(f"https://t.me/c/{channel_id}/{file_id}")
 
     except Exception as e:
-        return f"Error: {e}"
+        return f"🔥 ERROR: {str(e)}"
