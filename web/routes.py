@@ -9,8 +9,8 @@ from database.premium import get_all_premium
 from database.settings import get_settings, update_settings
 from database.logs import get_logs
 
-from config import DB_CHANNEL, ADMIN_PASSWORD  # ✅ added
-import asyncio  # ✅ added
+from config import DB_CHANNEL, ADMIN_PASSWORD
+import asyncio
 
 
 @web.route("/login", methods=["GET", "POST"])
@@ -112,13 +112,17 @@ async def logs_page():
     return render_template("logs.html", logs=logs)
 
 
-# 🔥 FINAL FIXED FILE ROUTE (SAFE + STABLE)
+# 🔥 FINAL FIXED FILE ROUTE (NO EVENT LOOP ERROR)
 
 @web.route("/file/<file_id>")
 def stream_file(file_id):
 
     try:
-        file = asyncio.run(get_file(file_id))
+        # ✅ SAFE EVENT LOOP HANDLING (FIX)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        file = loop.run_until_complete(get_file(file_id))
+        loop.close()
 
         if not file:
             return "File Not Found"
