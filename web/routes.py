@@ -118,16 +118,24 @@ async def logs_page():
 def stream_file(file_id):
 
     try:
-        # ✅ SAFE EVENT LOOP HANDLING (FIX)
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        file = loop.run_until_complete(get_file(file_id))
-        loop.close()
+        # ✅ SAFE FIX (NO LOOP ERROR EVER)
+        file = asyncio.get_event_loop().run_until_complete(get_file(file_id))
 
         if not file:
             return "File Not Found"
 
-        # 🔥 Direct Telegram redirect
+        channel_id = str(DB_CHANNEL).replace("-100", "")
+        return redirect(f"https://t.me/c/{channel_id}/{file_id}")
+
+    except RuntimeError:
+        # ✅ fallback (important for Render)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        file = loop.run_until_complete(get_file(file_id))
+
+        if not file:
+            return "File Not Found"
+
         channel_id = str(DB_CHANNEL).replace("-100", "")
         return redirect(f"https://t.me/c/{channel_id}/{file_id}")
 
