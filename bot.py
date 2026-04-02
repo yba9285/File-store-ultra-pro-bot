@@ -8,3 +8,6 @@ bot = Client(
     bot_token=BOT_TOKEN,
     plugins=dict(root="plugins")
 )
+
+if __name__ == "__main__":
+    bot.run()
